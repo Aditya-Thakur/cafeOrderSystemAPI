@@ -5,6 +5,7 @@ const bodyParser = require('body-parser');
 require('./db/db');
 const { getAllItems } = require('./controllers/item.controller');
 const { getAllTables } = require('./controllers/table.controller');
+const { getAllPaidOrders, getUnpaidOrders, addOrder, payOrder } = require('./controllers/order.controller');
 const app = express();
 const PORT = 8000;
 app.use(  cors({
@@ -31,7 +32,23 @@ app.get('/items', (req,res) => {
 
 app.get('/tables', (req,res) => {
     getAllTables(req, res);
-})
+});
+
+app.get('/allPaidOrders', (req,res) => {
+    getAllPaidOrders(req, res);
+});
+
+app.get('/allUnpaidOrders', (req,res) => {
+    getUnpaidOrders(req, res);
+});
+
+app.post('/newOrder', (req,res) => {
+    addOrder(req, res);
+});
+
+app.put('/payOrder', (req,res) => {
+    payOrder(req, res);
+});
 
 app.listen(PORT, () => {
     console.log('Express is serving at port: ', PORT);

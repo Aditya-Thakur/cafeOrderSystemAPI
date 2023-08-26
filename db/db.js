@@ -12,3 +12,4 @@ mongoose.connect(uri,  { useUnifiedTopology: true }).then(
 require('./../models/item.model');
 require('./../models/table.model');
 require('./../models/order.model');
+require('./../models/paidOrder.model');

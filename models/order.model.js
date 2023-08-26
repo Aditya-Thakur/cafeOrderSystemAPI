@@ -4,25 +4,46 @@ let orderSchema = new mongoose.Schema({
     orderId: {
         type: Number
     },
-    tableId: {
-        type: Number
+    table: {
+        type: {
+            id: Number,
+            name: String
+        }
     },
     itemList: {
-        type: [{
-            itemId: {
-                type: Number
-            },
-            quantity: {
-                type: Number
+        type: [
+            {
+                item: {
+                    type: {
+                        id: {
+                            type: Number
+                        },
+                        category: {
+                            type: String
+                        },
+                        subCategory: {
+                            type: String
+                        },
+                        itemName: {
+                            type: String
+                        },
+                        itemType: {
+                            type: String
+                        },
+                        price: {
+                            type: Number
+                        }
+                    }
+                },
+                quantity: {
+                    type: Number
+                }
             }
-        }]
+        ]
     },
-    customerName: {
-        type: String
-    },
-    CustomerPhone: {
-        type: String
+    orderTime: {
+        type: Date
     }
-    })
+})
 
 mongoose.model('Order', orderSchema)
