@@ -7,7 +7,7 @@ const { getAllItems } = require('./controllers/item.controller');
 const { getAllTables } = require('./controllers/table.controller');
 const { getAllPaidOrders, getUnpaidOrders, addOrder, payOrder } = require('./controllers/order.controller');
 const app = express();
-const PORT = 8000;
+const PORT = 4000;
 app.use(  cors({
     allowedHeaders: ["authorization", "Content-Type"], // you can change the headers
     exposedHeaders: ["authorization"], // you can change the headers
