@@ -24,7 +24,7 @@ const userWelcome = (req, res) => {
     res.send('Welcome to Cafe Order System Backend');
 }
 
-app.get('/welcome', userWelcome);
+app.get('/', userWelcome);
 
 app.get('/items', (req,res) => {
     getAllItems(req, res);
