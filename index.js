@@ -53,3 +53,5 @@ app.put('/payOrder', (req,res) => {
 app.listen(PORT, () => {
     console.log('Express is serving at port: ', PORT);
 });
+
+module.exports = app;
