@@ -43,6 +43,20 @@ async function addOrder(req, res) {
 }
 
 // Function to update Order
+async function updateOrder(req, res) {
+    const filter = {
+        orderId: req.body.orderId
+    };
+    const update = {
+        itemList: req.body.itemList
+    };
+    let orderRes = await newOrder.findOneAndUpdate(filter, update);
+    if (orderRes) {
+        res.send({ message: 'Success', status: 200 });
+    }
+}
+
+// Function to pay Order
 async function payOrder(req, res) {
     let newOrder = new paidOrder();
     newOrder.orderId = req.body.orderId;
@@ -57,7 +71,14 @@ async function payOrder(req, res) {
         await Order.deleteOne({ orderId: req.body.orderId });
         res.send({ message: 'Success', status: 200 });
     }
-
 }
 
-module.exports = { getAllPaidOrders, getUnpaidOrders, addOrder, payOrder };
+// Function to delete Order
+async function removeOrder(req, res) {
+    let orderRes = await Order.deleteOne({ orderId: req.params.orderId });
+    if (orderRes) {
+        res.send({ message: 'Success', status: 200 });
+    }
+}
+
+module.exports = { getAllPaidOrders, getUnpaidOrders, addOrder, payOrder, updateOrder, removeOrder };

@@ -5,7 +5,8 @@ const bodyParser = require('body-parser');
 require('./db/db');
 const { getAllItems } = require('./controllers/item.controller');
 const { getAllTables } = require('./controllers/table.controller');
-const { getAllPaidOrders, getUnpaidOrders, addOrder, payOrder } = require('./controllers/order.controller');
+const { getAllPaidOrders, getUnpaidOrders, addOrder,
+     payOrder, updateOrder, removeOrder } = require('./controllers/order.controller');
 const app = express();
 const PORT = 4000;
 app.use(  cors({
@@ -48,6 +49,14 @@ app.post('/newOrder', (req,res) => {
 
 app.put('/payOrder', (req,res) => {
     payOrder(req, res);
+});
+
+app.put('/updateOrder', (req,res) => {
+    updateOrder(req, res);
+});
+
+app.delete('/removeOrder', (req,res) => {
+    removeOrder(req, res);
 });
 
 app.listen(PORT, () => {
