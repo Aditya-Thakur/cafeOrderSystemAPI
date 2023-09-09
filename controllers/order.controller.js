@@ -1,6 +1,7 @@
 const mongoose = require('mongoose');
 const Order = mongoose.model('Order');
 const paidOrder = mongoose.model('PaidOrder');
+
 // Function to get all paid orders
 async function getAllPaidOrders(req, res) {
     let paidOrder = await paidOrder.find({});
@@ -58,13 +59,15 @@ async function updateOrder(req, res) {
 
 // Function to pay Order
 async function payOrder(req, res) {
+    console.log(req.body);
     let newOrder = new paidOrder();
     newOrder.orderId = req.body.orderId;
     newOrder.tableId = req.body.tableId;
     newOrder.customerName = req.body.customerName;
     newOrder.customerPhone = req.body.customerPhone;
     newOrder.orderTime = req.body.orderTime;
-    newOrder.paymentMode = req.body.paymentType;
+    newOrder.paymentMode = req.body.paymentMode;
+    newOrder.totalPrice = req.body.totalPrice;
     newOrder.itemList = req.body.itemList
     let orderRes = await newOrder.save();
     if (orderRes) {
