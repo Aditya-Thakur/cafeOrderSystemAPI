@@ -222,7 +222,26 @@ async function getPaidOrdersInDateRange(fromDate, toDate) {
             }
         }).exec();
 
-        return paidOrders;
+         // Map the itemList with item details based on itemId
+         const filledTop5PaidOrders = await Promise.all(
+            paidOrders.map(async (order) => {
+                const newItemList = await Promise.all(
+                    order.itemList.map(async (item) => {
+                        const itemDetails = await Item.findOne({ id: item.itemId });
+                        return {
+                            ...item.toObject(),
+                            itemDetails // Add item details to each item in itemList
+                        };
+                    })
+                );
+                return {
+                    ...order.toObject(),
+                    itemList: newItemList
+                };
+            })
+        );
+
+        return filledTop5PaidOrders;
     } catch (err) {
         console.error('Error:', err);
         throw err;
@@ -230,7 +249,7 @@ async function getPaidOrdersInDateRange(fromDate, toDate) {
 }
 
 async function getOrderByDate(req, res) {
-    const ordersInGivenDate = await getPaidOrdersInDateRange(req.params.fromDate, req.params.toDate);
+    const ordersInGivenDate = await getPaidOrdersInDateRange(req.body.start, req.body.end);
     res.send({
         ordersInGivenDate: ordersInGivenDate
     });
@@ -294,4 +313,4 @@ async function orderByRank(req, res) {
     });
 }
 
-module.exports = { dashboardPreview, getTopOrders, orderByRank };
+module.exports = { dashboardPreview, getTopOrders, orderByRank, getOrderByDate };

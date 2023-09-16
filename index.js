@@ -7,7 +7,7 @@ const { getAllItems } = require('./controllers/item.controller');
 const { getAllTables } = require('./controllers/table.controller');
 const { getAllPaidOrders, getUnpaidOrders, addOrder,
      payOrder, updateOrder, removeOrder } = require('./controllers/order.controller');
-const { dashboardPreview, orderByRank } = require('./controllers/dashboard.controller');
+const { dashboardPreview, orderByRank, getOrderByDate } = require('./controllers/dashboard.controller');
 const app = express();
 const PORT = 4000;
 app.use(  cors({
@@ -50,6 +50,10 @@ app.get('/dashboard', (req,res) => {
 
 app.get('/orderByRank', (req,res) => {
     orderByRank(req, res);
+});
+
+app.post('/orderByRange', (req,res) => {
+    getOrderByDate(req, res);
 });
 
 app.post('/newOrder', (req,res) => {
