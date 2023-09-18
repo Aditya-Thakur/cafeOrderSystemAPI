@@ -27,7 +27,7 @@ async function addOrder(req, res) {
         newOrder.itemList = [];
         order.itemList.forEach(orderItem => {
             newOrder.itemList.push({
-                item : {
+                item: {
                     id: orderItem.item.id,
                     category: orderItem.item.category,
                     subCategory: orderItem.item.subCategory,
@@ -51,7 +51,7 @@ async function updateOrder(req, res) {
     const update = {
         itemList: req.body.itemList
     };
-    let orderRes = await newOrder.findOneAndUpdate(filter, update);
+    let orderRes = await Order.findOneAndUpdate(filter, update);
     if (orderRes) {
         res.send({ message: 'Success', status: 200 });
     }
