@@ -59,7 +59,6 @@ async function updateOrder(req, res) {
 
 // Function to pay Order
 async function payOrder(req, res) {
-    console.log(req.body);
     let newOrder = new paidOrder();
     newOrder.orderId = req.body.orderId;
     newOrder.tableId = req.body.tableId;
@@ -68,7 +67,7 @@ async function payOrder(req, res) {
     newOrder.orderTime = req.body.orderTime;
     newOrder.paymentMode = req.body.paymentMode;
     newOrder.totalPrice = req.body.totalPrice;
-    newOrder.itemList = req.body.itemList
+    newOrder.itemList = req.body.itemList;
     let orderRes = await newOrder.save();
     if (orderRes) {
         await Order.deleteOne({ orderId: req.body.orderId });
