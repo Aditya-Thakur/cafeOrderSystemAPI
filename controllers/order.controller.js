@@ -23,8 +23,11 @@ async function addOrder(req, res) {
             id: order.table.id,
             name: order.table.name
         }
+        newOrder.customerName = order.customerName;
+        newOrder.customerPhone = order.customerPhone;
         newOrder.orderTime = order.orderTime;
         newOrder.itemList = [];
+        newOrder.discount = order.discount;
         order.itemList.forEach(orderItem => {
             newOrder.itemList.push({
                 item: {
@@ -68,6 +71,9 @@ async function payOrder(req, res) {
     newOrder.paymentMode = req.body.paymentMode;
     newOrder.totalPrice = req.body.totalPrice;
     newOrder.itemList = req.body.itemList;
+    newOrder.discount = req.body.discount;
+    newOrder.dailyOrderId = req.body.dailyOrderId;
+    newOrder.continuousOrderId = req.body.continuousOrderId;
     let orderRes = await newOrder.save();
     if (orderRes) {
         await Order.deleteOne({ orderId: req.body.orderId });

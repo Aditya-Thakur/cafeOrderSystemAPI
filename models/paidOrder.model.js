@@ -31,6 +31,15 @@ let paidOrderSchema = new mongoose.Schema({
     },
     totalPrice: {
         type: Number
+    },
+    dailyOrderId: {
+        type: Number
+    },
+    continuousOrderId: {
+        type: Number
+    },
+    discount: {
+        type: Number
     }
 });
 
