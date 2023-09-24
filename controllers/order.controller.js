@@ -31,7 +31,7 @@ async function addOrder(req, res) {
         order.itemList.forEach(orderItem => {
             newOrder.itemList.push({
                 item: {
-                    id: orderItem.item.id,
+                    itemId: orderItem.item.itemId,
                     category: orderItem.item.category,
                     subCategory: orderItem.item.subCategory,
                     itemName: orderItem.item.itemName,

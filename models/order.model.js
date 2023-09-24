@@ -21,7 +21,7 @@ let orderSchema = new mongoose.Schema({
             {
                 item: {
                     type: {
-                        id: {
+                        itemId: {
                             type: Number
                         },
                         category: {
