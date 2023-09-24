@@ -83,7 +83,7 @@ async function payOrder(req, res) {
 
 // Function to delete Order
 async function removeOrder(req, res) {
-    let orderRes = await Order.deleteOne({ orderId: req.params.orderId });
+    let orderRes = await Order.deleteOne({ orderId: req.query.orderId });
     if (orderRes) {
         res.send({ message: 'Success', status: 200 });
     }
