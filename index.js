@@ -3,7 +3,7 @@ const cors = require('cors');
 const bodyParser = require('body-parser');
 // const axios = require('axios');
 require('./db/db');
-const { getAllItems } = require('./controllers/item.controller');
+const { getAllItems, updateItem } = require('./controllers/item.controller');
 const { getAllTables } = require('./controllers/table.controller');
 const { getAllPaidOrders, getUnpaidOrders, addOrder,
     payOrder, updateOrder, removeOrder } = require('./controllers/order.controller');
@@ -79,7 +79,11 @@ app.post('/addExpense', (req, res) => {
 
 app.post('/getExpensesOfMonth', (req, res) => {
     getExpensesOfMonth(req, res);
-})
+});
+
+app.post('/updateItem', (req, res) => {
+    updateItem(req, res);
+});
 
 app.listen(PORT, () => {
     console.log('Express is serving at port: ', PORT);

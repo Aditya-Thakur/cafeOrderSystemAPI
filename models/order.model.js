@@ -62,10 +62,9 @@ let orderSchema = new mongoose.Schema({
 });
 
 orderSchema.pre('save', async function (next) {
-    // If it's a new order, generate and set the daily order ID
-    if (this.isNew) {
-        this.dailyOrderId = await this.generateDailyOrderId();
-    }
+    // Always generate and set the daily order ID
+    this.dailyOrderId = await this.generateDailyOrderId();
+
 
     // Always update the continuous order ID
     this.continuousOrderId = await this.generateContinuousOrderId();
@@ -85,7 +84,6 @@ orderSchema.methods.generateDailyOrderId = async function () {
     )
         .sort({ dailyOrderId: -1 })
         .limit(1);
-
     return highestDailyOrder
         ? highestDailyOrder.dailyOrderId + 1
         : 1; // If no orders for the day, start from 1
@@ -96,7 +94,6 @@ orderSchema.methods.generateContinuousOrderId = async function () {
     const highestContinuousOrder = await Order.findOne({}, { continuousOrderId: 1 })
         .sort({ continuousOrderId: -1 })
         .limit(1);
-
     return highestContinuousOrder
         ? highestContinuousOrder.continuousOrderId + 1
         : 1; // If no orders, start from 1
