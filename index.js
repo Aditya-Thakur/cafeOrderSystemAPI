@@ -8,7 +8,7 @@ const { getAllTables } = require('./controllers/table.controller');
 const { getAllPaidOrders, getUnpaidOrders, addOrder,
     payOrder, updateOrder, removeOrder } = require('./controllers/order.controller');
 const { dashboardPreview, orderByRank, getOrderByDate } = require('./controllers/dashboard.controller');
-const { addExpense, getExpensesOfMonth } = require('./controllers/expense.controller');
+const { addExpense, getExpensesOfMonth, getExpensesOfDateRange } = require('./controllers/expense.controller');
 const app = express();
 const PORT = 4000;
 app.use(cors({
@@ -79,6 +79,10 @@ app.post('/addExpense', (req, res) => {
 
 app.post('/getExpensesOfMonth', (req, res) => {
     getExpensesOfMonth(req, res);
+});
+
+app.post('/getExpensesOfDateRange', (req, res) => {
+    getExpensesOfDateRange(req, res);
 });
 
 app.post('/updateItem', (req, res) => {

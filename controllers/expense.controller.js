@@ -35,4 +35,32 @@ async function getExpensesOfMonth(req, res) {
     }
 }
 
-module.exports = { addExpense, getExpensesOfMonth };
+// Method to get expenses for a given date range
+async function getExpensesOfDateRange(req, res) {
+    try {
+        const expenseInGivenDate = await getExpensesInDateRange(req.body.start, req.body.end);
+        res.json(expenseInGivenDate);
+    } catch (error) {
+        console.error('Error:', error);
+        res.status(500).json({ error: 'An error occurred while fetching expenses.' });
+    }
+}
+
+// Define a function to get expenses within a date range
+async function getExpensesInDateRange(fromDate, toDate) {
+    try {
+        console.log(fromDate, toDate);
+        const expenseList = await Expense.find({
+            date: {
+                $gte: fromDate,
+                $lte: toDate
+            }
+        }).exec();
+        return expenseList;
+    } catch (err) {
+        console.error('Error:', err);
+        throw err;
+    }
+}
+
+module.exports = { addExpense, getExpensesOfMonth, getExpensesOfDateRange };
