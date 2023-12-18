@@ -67,15 +67,15 @@ async function getTop5PaidOrdersForTodayWithItems() {
         const top5PaidOrders = await paidOrder.find({
             orderTime: { $gte: today }
         })
-        .limit(5)
-        .exec();
+            .limit(5)
+            .exec();
 
         // Map the itemList with item details based on itemId
         const filledTop5PaidOrders = await Promise.all(
             top5PaidOrders.map(async (order) => {
                 const newItemList = await Promise.all(
                     order.itemList.map(async (item) => {
-                        const itemDetails = await Item.findOne({ id: item.itemId });
+                        const itemDetails = await Item.findOne({ itemId: item.itemId });
                         return {
                             ...item.toObject(),
                             itemDetails // Add item details to each item in itemList
@@ -222,12 +222,12 @@ async function getPaidOrdersInDateRange(fromDate, toDate) {
             }
         }).exec();
 
-         // Map the itemList with item details based on itemId
-         const filledTop5PaidOrders = await Promise.all(
+        // Map the itemList with item details based on itemId
+        const filledTop5PaidOrders = await Promise.all(
             paidOrders.map(async (order) => {
                 const newItemList = await Promise.all(
                     order.itemList.map(async (item) => {
-                        const itemDetails = await Item.findOne({ id: item.itemId });
+                        const itemDetails = await Item.findOne({ itemId: item.itemId });
                         return {
                             ...item.toObject(),
                             itemDetails // Add item details to each item in itemList
@@ -286,7 +286,7 @@ async function getAllItemsWithOrderCount() {
             {
                 $sort: { orderCount: -1 }
             }
-        ],{ maxTimeMS: 60000 });
+        ], { maxTimeMS: 60000 });
 
         const itemsWithOrderCount = await Promise.all(
             result.map(async (item) => {

@@ -1,6 +1,7 @@
 const mongoose = require('mongoose');
 const Order = mongoose.model('Order');
 const paidOrder = mongoose.model('PaidOrder');
+const Counter = mongoose.model('Counter');
 
 // Function to get all paid orders
 async function getAllPaidOrders(req, res) {
@@ -17,12 +18,16 @@ async function getUnpaidOrders(req, res) {
 // Function to add new order
 async function addOrder(req, res) {
     req.body.forEach(async order => {
+        // Update counters for the order
+        const orderCount = await Counter.updateCounts();
         let newOrder = new Order();
         newOrder.orderId = order.orderId;
         newOrder.table = {
             id: order.table.id,
             name: order.table.name
         }
+        newOrder.dailyOrderId = orderCount.dailyOrderCount;
+        newOrder.continuousOrderId = orderCount.totalOrderCount;
         newOrder.customerName = order.customerName;
         newOrder.customerPhone = order.customerPhone;
         newOrder.orderTime = order.orderTime;
@@ -42,6 +47,7 @@ async function addOrder(req, res) {
             });
         });
         await newOrder.save();
+
     });
     res.send({ message: 'Success', status: 200 });
 }
