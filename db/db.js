@@ -15,3 +15,4 @@ require('./../models/table.model');
 require('./../models/order.model');
 require('./../models/paidOrder.model');
 require('./../models/expense.model');
+require('./../models/counter.model');
